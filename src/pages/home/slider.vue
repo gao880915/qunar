@@ -23,6 +23,7 @@ export default {
 <style scoped lang="stylus">
   @import '../../assets/styles/common/varibles.styl'
   .banner
+    width:100%
     overflow:hidden;
     height:0
     padding-bottom:29.25%;

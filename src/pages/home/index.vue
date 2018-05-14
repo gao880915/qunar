@@ -1,8 +1,9 @@
 <template>
-  <div>
+  <div class="main">
     <index-header></index-header>
     <slider :sliders="sliders"></slider>
     <icons :icons='icons'></icons>
+    <scroller class="scroller" :sights="sights"></scroller>
   </div>
 </template>
 
@@ -12,17 +13,20 @@ import Slider from './slider'
 import Icons from './icons'
 import axios from 'axios'
 import { mapState } from 'vuex'
+import Scroller from './scroller'
 export default {
   name: 'index',
   components: {
     IndexHeader,
     Slider,
-    Icons
+    Icons,
+    Scroller
   },
   data () {
     return {
       sliders: [],
-      icons: []
+      icons: [],
+      sights: []
     }
   },
   computed: {
@@ -40,6 +44,7 @@ export default {
         if (res.data.sliders) {
           res.data.sliders && (this.sliders = res.data.sliders)
           res.data.icons && (this.icons = res.data.icons)
+          res.data.sights && (this.sights = res.data.sights)
         }
       } else {
         this.handleDataError()
@@ -53,5 +58,16 @@ export default {
   }
 }
 </script>
-<style scoped>
+<style scoped lang="stylus">
+  .main
+    display:flex
+    flex-direction:column
+    position:absolute
+    left:0
+    right:0
+    bottom:0
+    top:0
+    .scroller
+      flex:1
+      overflow:hidden
 </style>
