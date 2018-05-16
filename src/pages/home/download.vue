@@ -5,12 +5,15 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex'
 export default {
   name: 'index-download',
   methods: {
     handleClick () {
-      this.$emit('close')
-    }
+      //  this.$emit('close')
+      this.changDownload(false)
+    },
+    ...mapMutations(['changDownload'])
   }
 }
 </script>

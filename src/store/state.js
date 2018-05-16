@@ -1,4 +1,4 @@
 export default {
-  city: '',
+  city: '北京',
   showdownload: true
 }
