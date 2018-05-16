@@ -4,7 +4,7 @@
       <img class="banner-image" :src="bannerImg" alt="" />
    </div>
    <gallary v-show="show" :imgList="imgList"
-   	@close="handleGallaryClose"></gallary>
+    @close="handleGallaryClose"></gallary>
  </div>
 </template>
 

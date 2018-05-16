@@ -5,9 +5,12 @@
     <list class="list"
           :list="list"
           :hotcity="hotcity"
+          @scroll="handleListScroll"
+          @fixchange="handleFixChange"
           ref="list">
     </list>
     <side-bar :list="list" @changeLetter="handleChangeLetter"></side-bar>
+    <fixed-title ref="fixedTitle"></fixed-title>
   </div>
 </template>
 
@@ -16,6 +19,7 @@ import CityHeader from './header'
 import Search from './search'
 import List from './list'
 import SideBar from './sidebar'
+import FixedTitle from './title'
 import axios from 'axios'
 export default {
   name: 'city',
@@ -29,7 +33,8 @@ export default {
     CityHeader,
     Search,
     List,
-    SideBar
+    SideBar,
+    FixedTitle
   },
   methods: {
     getListInfo () {
@@ -51,6 +56,12 @@ export default {
     },
     handleChangeLetter (item) {
       this.$refs.list.scrollToIndex(item)
+    },
+    handleListScroll (e) {
+      this.$refs.fixedTitle.SetShow(!(e.y > 0))
+    },
+    handleFixChange (num) {
+      this.$refs.fixedTitle.setMove(num || 0)
     }
   },
   created () {

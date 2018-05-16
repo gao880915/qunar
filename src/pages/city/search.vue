@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="search-wrapper">
     <div class="search">
       <input class="search-input" type="text" placeholder="输入城市名或拼音" @input="handleInputChange"/>
     </div>
@@ -71,6 +71,8 @@ export default {
 
 <style scoped lang="stylus">
   @import '../../assets/styles/common/varibles.styl'
+  .search-wrapper
+    z-index:1
   .search
     height: .74rem
     background: $bgColor

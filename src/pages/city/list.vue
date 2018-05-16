@@ -1,7 +1,7 @@
 <template>
   <div ref="wrapper">
     <div class="list">
-      <div class="area">
+      <div class="area" ref="current">
         <div class="title border-topbottom">当前位置</div>
         <div class="content">
           <div class="button" @click="handleCityClick(city)">
@@ -11,7 +11,7 @@
           </div>
         </div>
       </div>
-      <div class="area">
+      <div class="area" ref="hotcity">
         <div class="title border-topbottom">热门城市</div>
         <div class="content">
           <div class="button"
@@ -55,7 +55,16 @@ export default {
       city (state) {
         return state.city || '北京'
       }
-    })
+    }),
+    areaPositions () {
+      const arr = []
+      arr.push(this.$refs.current.offsetTop)
+      arr.push(this.$refs.hotcity.offsetTop)
+      for (let i in this.list) {
+        arr.push(this.$refs[i][0].offsetTop)
+      }
+      return arr
+    }
   },
   methods: {
     handleCityClick (city) {
@@ -67,10 +76,27 @@ export default {
     scrollToIndex (item) {
       this.scroll.scrollToElement(this.$refs[item][0])
     },
+    handleScroll (e) {
+      const y = -e.y
+      let flag = false
+      for (var i = 0; i < this.areaPositions.length; i++) {
+        if (y > this.areaPositions[i] - 27 && y < this.areaPositions[i]) {
+          const diff = y - this.areaPositions[i] + 27
+          flag = true
+          this.$emit('fixchange', diff)
+          break
+        }
+      }
+      !flag && this.$emit('fixchange')
+      this.$emit('scroll', e)
+    },
     ...mapMutations(['changeCity'])
   },
   mounted () {
-    this.scroll = new BScroll(this.$refs.wrapper)
+    this.scroll = new BScroll(this.$refs.wrapper, {
+      probeType: 3
+    })
+    this.scroll.on('scroll', this.handleScroll.bind(this))
   },
   activated () {
     this.scroll && this.scroll.refresh()

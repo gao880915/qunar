@@ -1,9 +1,10 @@
 <template>
   <div class="gallary" @click="handleGallaryClose">
-    <swiper class="container" :options="{}">
+    <swiper class="container" :options="swiperOption">
       <swiper-slide v-for="(item, index) of imgList" :key="index">
-        <img class="gallary-img" :src="item" />
+        <img class="gallary-img" :src="item" @click.stop/>
       </swiper-slide>
+      <div class="swiper-pagination" slot="pagination"></div>
     </swiper>
   </div>
 </template>
@@ -15,6 +16,17 @@ export default {
     imgList: Array,
     default: []
   },
+  data () {
+    return {
+      swiperOption: {
+        loop: true,
+        observer: true,
+        observeParents: true,
+        pagination: '.swiper-pagination',
+        paginationType: 'fraction'
+      }
+    }
+  },
   methods: {
     handleGallaryClose () {
       this.$emit('close')
@@ -24,7 +36,11 @@ export default {
 </script>
 
 <style scoped lang="stylus">
+ .container >>> .swiper-pagination-fraction
+   color:#fff
+   bottom:.6rem
  .gallary
+   overflow:hidden
    position:fixed
    top:0
    right:0
@@ -32,9 +48,12 @@ export default {
    left:0
    background:#000
    .container
-     display:flex
-     flex-direction:column
-     justify-content:center
+     width:100%
+     height:100%
    .gallary-img
      width:100%
+     position:absolute
+     left:0
+     top:50%
+     margin-top:-50%
 </style>

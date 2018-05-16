@@ -3,14 +3,19 @@
    <banner
     :bannerImg="bannerImg"
     :imgList="imgList"></banner>
+    <!--<download @close="handleCloseClick" v-show="download">下载条</download>-->
+    <download >下载条</download>
  </div>
 </template>
 
 <script>
 import Banner from './banner'
 import axios from 'axios'
+//  import download from 'mixins/download'
+import Download from 'components/common/download/download'
 export default {
   name: 'detail',
+  //  mixins: [download],
   props: {
     sightid: [Number, String]
   },
@@ -18,10 +23,12 @@ export default {
     return {
       bannerImg: '',
       imgList: []
+      //  download: true
     }
   },
   components: {
-    Banner
+    Banner,
+    Download
   },
   created () {
     this.getDetailInfo()
@@ -55,6 +62,12 @@ export default {
     handleGetDetailErr () {
       console.log('error')
     }
+  //  showDownload () {
+  //    this.download = true
+  //  },
+  //  handleCloseClick () {
+  //    this.download = false
+  //  }
   }
 }
 </script>

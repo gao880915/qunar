@@ -4,6 +4,8 @@
     <slider :sliders="sliders"></slider>
     <icons :icons="icons"></icons>
     <scroller class="scroller" :sights="sights"></scroller>
+    <!--<download @close="handleCloseClick" v-show="download">下载条</download>-->
+    <download v-show="showdownload">下载条</download>
   </div>
 </template>
 
@@ -15,21 +17,26 @@ import IndexHeader from './header'
 import Slider from './slider'
 import Icons from './icons'
 import Scroller from './scroller'
+//  import download from 'mixins/download'
+import Download from './download'
 
 export default {
   name: 'index',
+  //  mixins: [download],
   data () {
     return {
       sliders: [],
       icons: [],
       sights: []
+      //  download: true
     }
   },
   components: {
     IndexHeader,
     Slider,
     Icons,
-    Scroller
+    Scroller,
+    Download
   },
   watch: {
     city () {
@@ -37,7 +44,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['city'])
+    ...mapState(['city', 'showdownload'])
   },
   methods: {
     ...mapMutations(['changeCity']),
@@ -60,8 +67,13 @@ export default {
     handleDataError () {
       console.log('error')
     }
+  //  showDownload () {
+  //    this.download = true
+  //  },
+  //  handleCloseClick () {
+  //    this.download = false
+  //  }
   },
-
   created () {
     this.getIndexData()
   }

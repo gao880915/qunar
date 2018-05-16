@@ -40,6 +40,7 @@ module.exports = {
       'pages': resolve('src/pages'),
       'store': resolve('src/store'),
       'components': resolve('src/components'),
+      'mixins': resolve('src/mixins'),
     }
   },
   module: {
