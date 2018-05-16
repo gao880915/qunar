@@ -1,9 +1,11 @@
 <template>
-  <swiper class="icons index-icons" :options="swiperOption">
-    <swiper-slide class="icon-page" v-for="(page,index) in pages" :key="index">
+  <swiper class="icons" :options="swiperOption">
+    <swiper-slide class="icon-page"
+                  v-for="(page, index) of pages"
+                  :key="index">
       <div class="icons-list">
-        <div class="icons-item" v-for="item in page" :key="item.id">
-          <img class="icon-img" :src="item.imgUrl" alt="" />
+        <div v-for="item in page" :key="item.id" class="icons-item">
+          <img class="icon-img" :src="item.imgUrl" />
           <p class="icon-title">{{item.title}}</p>
         </div>
       </div>
@@ -15,7 +17,9 @@
 <script>
 export default {
   name: 'index-icons',
-  props: ['icons'],
+  props: {
+    icons: Array
+  },
   data () {
     return {
       swiperOption: {
@@ -27,7 +31,7 @@ export default {
     pages () {
       const pages = []
       this.icons.forEach((value, index) => {
-        const page = Math.floor((index / 8))
+        let page = Math.floor(index / 8)
         if (!pages[page]) {
           pages[page] = []
         }
@@ -38,34 +42,28 @@ export default {
   }
 }
 </script>
+
 <style scoped lang="stylus">
-@import '../../assets/styles/common/varibles.styl'
+  @import '../../assets/styles/common/varibles.styl'
+  .icons >>> .swiper-pagination-bullet
+    background: $bgColor
   .icons
-    padding-bottom:.6rem
-    width:100%
-    .icon-page
-      overflow:hidden
-      height:0
-      padding-bottom:2.8rem
-      .icons-list
-        display:flex
-        flex-direction:row
-        flex-wrap:wrap
-        .icons-item
-          width:25%
-          padding-top:.3rem
-          text-align:center
-          .icon-img
-            width:.66rem
-            height:.66rem
-          .icon-title
-            margin-top:.16rem
-            color:#333
-            font-size:.28rem
-</style>
-<style lang="stylus">
-@import '../../assets/styles/common/varibles.styl'
-  .index-icons
-    .swiper-pagination-bullet
-      background:$bgColor
+    overflow: hidden
+    height: 0
+    width: 100%
+    padding-bottom: 3.4rem
+    .icons-list
+      display: flex
+      flex-wrap: wrap
+      .icons-item
+        width: 25%
+        padding-top: .3rem
+        text-align: center
+        .icon-img
+          width: .66rem
+          height: .66rem
+        .icon-title
+          margin-top: .16rem
+          font-size: .28rem
+          color: #333
 </style>

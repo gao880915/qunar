@@ -2,26 +2,22 @@
   <div class="main">
     <index-header></index-header>
     <slider :sliders="sliders"></slider>
-    <icons :icons='icons'></icons>
+    <icons :icons="icons"></icons>
     <scroller class="scroller" :sights="sights"></scroller>
   </div>
 </template>
 
 <script>
+import axios from 'axios'
+import { mapState, mapMutations } from 'vuex'
+
 import IndexHeader from './header'
 import Slider from './slider'
 import Icons from './icons'
-import axios from 'axios'
-import { mapState } from 'vuex'
 import Scroller from './scroller'
+
 export default {
   name: 'index',
-  components: {
-    IndexHeader,
-    Slider,
-    Icons,
-    Scroller
-  },
   data () {
     return {
       sliders: [],
@@ -29,45 +25,59 @@ export default {
       sights: []
     }
   },
+  components: {
+    IndexHeader,
+    Slider,
+    Icons,
+    Scroller
+  },
+  watch: {
+    city () {
+      this.getIndexData()
+    }
+  },
   computed: {
     ...mapState(['city'])
   },
   methods: {
+    ...mapMutations(['changeCity']),
     getIndexData () {
-      axios.get('/api//index.json?city=' + this.city)
+      axios.get('/api/index.json?city=' + this.city)
         .then(this.handleDataSucc.bind(this))
         .catch(this.handleDataError.bind(this))
     },
     handleDataSucc (res) {
       res = res ? res.data : null
-      if (res && res.data) {
-        if (res.data.sliders) {
-          res.data.sliders && (this.sliders = res.data.sliders)
-          res.data.icons && (this.icons = res.data.icons)
-          res.data.sights && (this.sights = res.data.sights)
-        }
+      if (res && res.ret && res.data) {
+        // res.data.city && (this.changeCity(res.data.city))
+        res.data.slider && (this.sliders = res.data.slider)
+        res.data.icons && (this.icons = res.data.icons)
+        res.data.sights && (this.sights = res.data.sights)
       } else {
         this.handleDataError()
       }
     },
     handleDataError () {
+      console.log('error')
     }
   },
-  mounted () {
+
+  created () {
     this.getIndexData()
   }
 }
 </script>
+
 <style scoped lang="stylus">
   .main
-    display:flex
-    flex-direction:column
-    position:absolute
-    left:0
-    right:0
-    bottom:0
-    top:0
+    display: flex
+    flex-direction: column
+    position: absolute
+    left: 0
+    right: 0
+    bottom: 0
+    top: 0
     .scroller
-      flex:1
-      overflow:hidden
+      flex: 1
+      overflow: hidden
 </style>

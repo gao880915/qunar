@@ -1,6 +1,7 @@
 {
    "ret":true,
    "data":{
+   	  "city":"北京",
    	  "sliders":[{
    	  	 "id":"0001",
    	  	 "link":"",
