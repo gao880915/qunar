@@ -4,7 +4,7 @@
     :bannerImg="bannerImg"
     :imgList="imgList"></banner>
     <!--<download @close="handleCloseClick" v-show="download">下载条</download>-->
-    <download >下载条</download>
+    <download v-show="showdownload">下载条</download>
  </div>
 </template>
 
@@ -13,11 +13,15 @@ import Banner from './banner'
 import axios from 'axios'
 //  import download from 'mixins/download'
 import Download from 'components/common/download/download'
+import { mapState, mapMutations } from 'vuex'
 export default {
   name: 'detail',
   //  mixins: [download],
   props: {
     sightid: [Number, String]
+  },
+  computed: {
+    ...mapState(['city', 'showdownload'])
   },
   data () {
     return {
@@ -61,7 +65,8 @@ export default {
     },
     handleGetDetailErr () {
       console.log('error')
-    }
+    },
+    ...mapMutations(['changeCity'])
   //  showDownload () {
   //    this.download = true
   //  },

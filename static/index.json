@@ -2,7 +2,7 @@
    "ret":true,
    "data":{
    	  "city":"北京",
-   	  "sliders":[{
+   	  "slider":[{
    	  	 "id":"0001",
    	  	 "link":"",
    	  	 "imgUrl":"http://img1.qunarzz.com/piao/fusion/1801/bd/04554e7c67650302.jpg_750x200_4293d60a.jpg"

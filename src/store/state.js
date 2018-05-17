@@ -1,4 +1,4 @@
 export default {
   city: '北京',
-  showdownload: true
+  showdownload: !localStorage.download
 }
