@@ -15,8 +15,10 @@ export default {
       this.show = flag
     },
     setMove (num) {
-      console.log(num)
       this.$refs.title.style.top = (81 - num) + 'px'
+    },
+    setTitleName (titlename) {
+      this.$refs.title.innerText = titlename
     }
   }
 }

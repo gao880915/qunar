@@ -1,7 +1,7 @@
 <template>
   <div ref="wrapper">
     <div class="list">
-      <div class="area" ref="current">
+      <div class="area" ref="current" name='当前位置'>
         <div class="title border-topbottom">当前位置</div>
         <div class="content">
           <div class="button" @click="handleCityClick(city)">
@@ -11,7 +11,7 @@
           </div>
         </div>
       </div>
-      <div class="area" ref="hotcity">
+      <div class="area" ref="hotcity" name='热门城市'>
         <div class="title border-topbottom">热门城市</div>
         <div class="content">
           <div class="button"
@@ -58,10 +58,10 @@ export default {
     }),
     areaPositions () {
       const arr = []
-      arr.push(this.$refs.current.offsetTop)
-      arr.push(this.$refs.hotcity.offsetTop)
+      arr.push({'pos': this.$refs.current.offsetTop, 'name': this.$refs.current.getAttribute('name')})
+      arr.push({'pos': this.$refs.hotcity.offsetTop, 'name': this.$refs.hotcity.getAttribute('name')})
       for (let i in this.list) {
-        arr.push(this.$refs[i][0].offsetTop)
+        arr.push({'pos': this.$refs[i][0].offsetTop, 'name': i})
       }
       return arr
     }
@@ -80,11 +80,15 @@ export default {
       const y = -e.y
       let flag = false
       for (var i = 0; i < this.areaPositions.length; i++) {
-        if (y > this.areaPositions[i] - 27 && y < this.areaPositions[i]) {
-          const diff = y - this.areaPositions[i] + 27
+        if (y > this.areaPositions[i].pos - 27 && y < this.areaPositions[i].pos) {
+          const diff = y - this.areaPositions[i].pos + 27
           flag = true
           this.$emit('fixchange', diff)
+          //  this.$emit('gettitlename', this.areaPositions[i].name)
           break
+        }
+        if (y > this.areaPositions[i].pos && y < this.areaPositions[i + 1].pos) {
+          this.$emit('gettitlename', this.areaPositions[i].name)
         }
       }
       !flag && this.$emit('fixchange')

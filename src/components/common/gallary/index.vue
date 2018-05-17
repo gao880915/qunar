@@ -40,6 +40,7 @@ export default {
    color:#fff
    bottom:.6rem
  .gallary
+   z-index:999
    overflow:hidden
    position:fixed
    top:0

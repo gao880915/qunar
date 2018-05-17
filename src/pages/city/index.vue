@@ -7,9 +7,10 @@
           :hotcity="hotcity"
           @scroll="handleListScroll"
           @fixchange="handleFixChange"
+          @gettitlename="handleGetTitleName"
           ref="list">
     </list>
-    <side-bar :list="list" @changeLetter="handleChangeLetter"></side-bar>
+    <side-bar ref="sideBar" :list="list" @changeLetter="handleChangeLetter"></side-bar>
     <fixed-title ref="fixedTitle"></fixed-title>
   </div>
 </template>
@@ -52,7 +53,7 @@ export default {
       }
     },
     handleGetListErr () {
-      console.log('请求返回失败')
+      ('请求返回失败')
     },
     handleChangeLetter (item) {
       this.$refs.list.scrollToIndex(item)
@@ -62,6 +63,10 @@ export default {
     },
     handleFixChange (num) {
       this.$refs.fixedTitle.setMove(num || 0)
+    },
+    handleGetTitleName (titlename) {
+      this.$refs.fixedTitle.setTitleName(titlename)
+      this.$refs.sideBar.setCurrentPos(titlename)
     }
   },
   created () {

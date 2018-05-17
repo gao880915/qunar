@@ -4,7 +4,11 @@ export default {
   },
   changDownload (state, flag) {
     if (flag === false) {
-      localStorage.download = true
+      try {
+        localStorage.download = true
+      } catch (e) {
+        // TODO handle the exception
+      }
     }
     state.showdownload = flag
   }

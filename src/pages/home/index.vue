@@ -81,7 +81,9 @@ export default {
 </script>
 
 <style scoped lang="stylus">
+ @import '../../assets/styles/common/mixins.styl'
   .main
+    /*hello(lightblue)*/
     display: flex
     flex-direction: column
     position: absolute

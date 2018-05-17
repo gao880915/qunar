@@ -3,8 +3,10 @@
    <banner
     :bannerImg="bannerImg"
     :imgList="imgList"></banner>
+    <detail-header></detail-header>
     <!--<download @close="handleCloseClick" v-show="download">下载条</download>-->
     <download v-show="showdownload">下载条</download>
+    <list :list="ticketList"></list>
  </div>
 </template>
 
@@ -13,6 +15,8 @@ import Banner from './banner'
 import axios from 'axios'
 //  import download from 'mixins/download'
 import Download from 'components/common/download/download'
+import List from './list'
+import DetailHeader from './header'
 import { mapState, mapMutations } from 'vuex'
 export default {
   name: 'detail',
@@ -26,13 +30,16 @@ export default {
   data () {
     return {
       bannerImg: '',
-      imgList: []
+      imgList: [],
+      ticketList: []
       //  download: true
     }
   },
   components: {
     Banner,
-    Download
+    Download,
+    List,
+    DetailHeader
   },
   created () {
     this.getDetailInfo()
@@ -59,6 +66,7 @@ export default {
       if (res && res.ret && res.data) {
         this.bannerImg = res.data.bannerImg
         this.imgList = res.data.imgList
+        this.ticketList = res.data.ticketList
       } else {
         this.handleGetDetailErr()
       }

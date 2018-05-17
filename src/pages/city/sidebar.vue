@@ -4,6 +4,7 @@
       <div class="sidebar-item"
         v-for="item in alphabet"
         :key="item"
+        :ref="item"
         @touchstart="handleTouchStart(item)"
         @touchmove="handleTouchMove">
         {{item}}
@@ -39,6 +40,14 @@ export default {
       index = index < 0 ? 0 : index
       index = (index >= this.alphabet.length) ? (this.alphabet.length - 1) : index
       this.$emit('changeLetter', this.alphabet[index])
+    },
+    setCurrentPos (titlename) {
+      try {
+        for (var i = 0; i < this.alphabet.length; i++) {
+          this.$refs[this.alphabet[i]][0].style.color = '#666'
+        }
+        this.$refs[titlename][0].style.color = '#00bcd4'
+      } catch (e) {}
     }
   }
 }
