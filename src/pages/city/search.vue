@@ -15,6 +15,7 @@
 
 <script>
 import BScroll from 'better-scroll'
+import { debounce } from 'utils/utils'
 export default {
   name: 'city-search',
   props: {
@@ -49,7 +50,11 @@ export default {
   },
   methods: {
     handleInputChange (e) {
-      const value = e.target.value.toLowerCase()
+      this.temE = e
+      debounce(this.inpputChangeMethod, 50)()
+    },
+    inpputChangeMethod () {
+      const value = this.temE.target.value.toLowerCase()
       if (value) {
         this.showList = true
         this.filterResult = this.result.filter((item) => {
@@ -60,6 +65,18 @@ export default {
         })
       } else {
         this.showList = false
+      }
+    },
+    debounce (fn, delay = 30) {
+      let timer
+      return () => {
+        if (timer) {
+          clearTimeout(timer)
+        } else {
+          timer = setTimeout(() => {
+            fn()
+          }, delay)
+        }
       }
     }
   },

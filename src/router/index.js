@@ -1,9 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Index from 'pages/home/index'
-import City from 'pages/city/index'
-import Detail from 'pages/detail/index'
-
 Vue.use(Router)
 
 export default new Router({
@@ -11,15 +7,15 @@ export default new Router({
     {
       path: '/',
       name: 'Index',
-      component: Index
+      component: () => import('pages/home/index')
     }, {
       path: '/city',
       name: 'city',
-      component: City
+      component: () => import('pages/city/index')
     }, {
       path: '/detail/:sightid',
       name: 'detail',
-      component: Detail,
+      component: () => import('pages/detail/index'),
       props: true
     }
   ]
